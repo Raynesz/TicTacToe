@@ -2,9 +2,11 @@
 #include "Game.h"
 
 int main() {
-	Game game;
+	Game *game;
 
-	game.start();
+	game = new Game;
+	game->start();
+	delete(game);
 
 	return 0;
 }

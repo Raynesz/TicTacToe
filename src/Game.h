@@ -5,8 +5,10 @@ class Game
 
 	void drawBoard();
 	void set(char, int);
+	char get(int index);
 	bool validateInput(char&);
-	int mainLoop();
+	char mainLoop();
+	char evaluateWinner(char&);
 
 	public:
 		void start();
