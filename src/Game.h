@@ -1,12 +1,12 @@
 #pragma once
 class Game
 {
-	char board[9] = { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', };
+	char board[9] = { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' };
 
 	void drawBoard();
-	void set(char, int);
-	char get(int index);
-	bool validateInput(char&);
+	void set(char&, int&);
+	char get(int&);
+	bool validateInput(int&);
 	char mainLoop();
 	char evaluateWinner(char&);
 

@@ -9,17 +9,25 @@ char Game::evaluateWinner(char& player) {
 }
 
 char Game::mainLoop() {
-	char x, player = 'X', winner = ' ';
-	while (winner == ' ') {
-		std::cin >> x;
-		if (validateInput(x)) {
-			if (x == '0') {
+	int input;
+	char player = 'X', winner = '\n';
+	while (winner == '\n') {
+		drawBoard();
+		std::cout << std::endl << "Player " << player << ": ";
+		//do {
+		//	input = std::cin.get();
+		//} while (input == -1);
+
+		std::cin >> input;
+
+		if (validateInput(input)) {
+			if (input == 0) {
 				return 'E';
 			}
 			else {
-				set(player, x-1);
+				set(player, input);
 			}
-			winner = evaluateWinner(player);
+			//winner = evaluateWinner(player);
 		}
 		else {
 			std::cout << "Please provide valid input." << std::endl;
@@ -29,27 +37,30 @@ char Game::mainLoop() {
 	return winner;
 }
 
-bool Game::validateInput(char& x) {
-	char indices[10] = { '0', '1', '2', '3', '4' , '5' , '6' , '7' , '8' , '9' };
-	bool a, b;
-	
-	a = std::find(std::begin(indices), std::end(indices), x) != std::end(indices);
+bool Game::validateInput(int& input) {
+	bool a = false, b = false;
+	int index = input-1;
 
-	if (board[x-1] == ' ') {
-		b = true;
-	}
-	else {
-		b = false;
+	for (int i = 0; i < 9; i++) {
+		if (index == i) {
+			a = true;
+			break;
+		}
 	}
 
-	return !a && b;
+	if (index != 0) {
+		if (board[index] == ' ') {
+			b = true;
+		}
+	}
+
+	return a && b;
 }
 
 void Game::start() {
 	int winner;
 
 	std::cout << "----------- GAME START -----------" << std::endl;
-	drawBoard();
 	std::cout << "Use numbers 1-9 in the numpad to place your mark on the board. Type in 0 if you want to exit." << std::endl;
 	winner = mainLoop();
 	switch(winner) {
@@ -65,15 +76,17 @@ void Game::start() {
 }
 
 void Game::drawBoard() {
-	std::cout << std::endl << UNDERLINE << board[0] << "|" << board[1] << "|" << board[2] << std::endl
-		<< board[3] << "|" << board[4] << "|" << board[5] << CLOSEUNDERLINE << std::endl
-		<< board[6] << "|" << board[7] << "|" << board[8] << std::endl;
+	std::cout << std::endl << UNDERLINE << board[6] << "|" << board[7] << "|" << board[8] << CLOSEUNDERLINE << std::endl
+		<< UNDERLINE << board[3] << "|" << board[4] << "|" << board[5] << CLOSEUNDERLINE << std::endl
+		<< board[0] << "|" << board[1] << "|" << board[2] << std::endl;
 }
 
-void Game::set(char mark, int index) {
+void Game::set(char& mark, int& input) {
+	int index = input - 1;
 	board[index] = mark;
 }
 
-char Game::get(int index) {
+char Game::get(int& input) {
+	int index = input - 1;
 	return board[index];
 }
