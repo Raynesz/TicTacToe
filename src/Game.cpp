@@ -5,33 +5,28 @@
 #define UNDERLINE "\033[4m"
 #define CLOSEUNDERLINE "\033[0m"
 
-char Game::evaluateWinner(char& player) {
+char Game::evaluateWinner(char& player, int& input) {
+	int index = input - 1;
+
+
 	return 'D';
 }
 
 char Game::mainLoop() {
-	int input;
-	char player = 'X', winner = '\n';
 	while (winner == '\n') {
 		drawBoard();
-
-		for (int i = 0; i < 9; i++) {
-			std::cout << i+1 << " : " << get(i) << std::endl;
-		}
-
-		std::cout << std::endl << "Player " << player << ": ";
-
+		printBoardList();
+		std::cout << std::endl << "Player " << curr_player << ": ";
 		intInput(input);
-
 		if (validateInput(input)) {
-			if (input == 0) {
+			if (input == -1) {
 				return 'E';
 			}
 			else {
-				set(player, input);
+				set(curr_player, input);
 			}
-			//winner = evaluateWinner(player);
-			player == 'X' ? player = 'O' : player = 'X';
+			//winner = evaluateWinner(player, input);
+			nextPlayer();
 		}
 		else {
 			std::cout << std::endl << "!!! Please provide valid input. !!!" << std::endl;
@@ -40,43 +35,45 @@ char Game::mainLoop() {
 	return winner;
 }
 
+void Game::nextPlayer() {
+	curr_player == 'X' ? curr_player = 'O' : curr_player = 'X';
+}
+
 void Game::intInput(int& input) {
-	do {
+	std::cin >> input;
+	while (std::cin.fail()) {
 		std::cin.clear();
 		std::cin.ignore(INT_MAX, '\n');
 		std::cin >> input;
-	} while (std::cin.fail());
+	}
+	input--;
 }
 
 bool Game::validateInput(int& input) {
 	bool a = false, b = false;
-	int index = input-1;
 
 	for (int i = -1; i < 9; i++) {
-		if (index == i) {
+		if (input == i) {
 			a = true;
 			break;
 		}
 	}
 
 	if (a) {
-		if (index == -1) {
+		if (input == -1) {
 				b = true;
 			}
 		else {
-			if (board[index] == ' ') {
+			if (board[input] == ' ') {
 				b = true;
 			}
 		}
 	}
 
 	return a && b;
-	//return a;
 }
 
 void Game::start() {
-	int winner;
-
 	std::cout << "----------- GAME START -----------" << std::endl;
 	std::cout << "Use numbers 1-9 in the numpad to place your mark on the board. Type in 0 if you want to exit." << std::endl;
 	winner = mainLoop();
@@ -98,11 +95,16 @@ void Game::drawBoard() {
 		<< board[0] << "|" << board[1] << "|" << board[2] << std::endl;
 }
 
-void Game::set(char& mark, int& input) {
-	int index = input - 1;
+void Game::set(char& mark, int& index) {
 	board[index] = mark;
 }
 
-char Game::get(int& input) {
-	return board[input];
+char Game::get(int& index) {
+	return board[index];
+}
+
+void Game::printBoardList() {
+	for (int i = 0; i < 9; i++) {
+		std::cout << i + 1 << " : " << get(i) << std::endl;
+	}
 }
