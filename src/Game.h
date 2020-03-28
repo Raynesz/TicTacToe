@@ -9,6 +9,7 @@ class Game
 	bool validateInput(int&);
 	char mainLoop();
 	char evaluateWinner(char&);
+	void intInput(int&);
 
 	public:
 		void start();

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <climits>
 #include "Game.h"
 
 #define UNDERLINE "\033[4m"
@@ -13,12 +14,14 @@ char Game::mainLoop() {
 	char player = 'X', winner = '\n';
 	while (winner == '\n') {
 		drawBoard();
-		std::cout << std::endl << "Player " << player << ": ";
-		//do {
-		//	input = std::cin.get();
-		//} while (input == -1);
 
-		std::cin >> input;
+		for (int i = 0; i < 9; i++) {
+			std::cout << i+1 << " : " << get(i) << std::endl;
+		}
+
+		std::cout << std::endl << "Player " << player << ": ";
+
+		intInput(input);
 
 		if (validateInput(input)) {
 			if (input == 0) {
@@ -37,24 +40,38 @@ char Game::mainLoop() {
 	return winner;
 }
 
+void Game::intInput(int& input) {
+	do {
+		std::cin.clear();
+		std::cin.ignore(INT_MAX, '\n');
+		std::cin >> input;
+	} while (std::cin.fail());
+}
+
 bool Game::validateInput(int& input) {
 	bool a = false, b = false;
 	int index = input-1;
 
-	for (int i = 0; i < 9; i++) {
+	for (int i = -1; i < 9; i++) {
 		if (index == i) {
 			a = true;
 			break;
 		}
 	}
 
-	if (index != 0) {
-		if (board[index] == ' ') {
-			b = true;
+	if (a) {
+		if (index == -1) {
+				b = true;
+			}
+		else {
+			if (board[index] == ' ') {
+				b = true;
+			}
 		}
 	}
 
 	return a && b;
+	//return a;
 }
 
 void Game::start() {
@@ -87,6 +104,5 @@ void Game::set(char& mark, int& input) {
 }
 
 char Game::get(int& input) {
-	int index = input - 1;
-	return board[index];
+	return board[input];
 }
