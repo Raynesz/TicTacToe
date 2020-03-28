@@ -28,11 +28,11 @@ char Game::mainLoop() {
 				set(player, input);
 			}
 			//winner = evaluateWinner(player);
+			player == 'X' ? player = 'O' : player = 'X';
 		}
 		else {
-			std::cout << "Please provide valid input." << std::endl;
+			std::cout << std::endl << "!!! Please provide valid input. !!!" << std::endl;
 		}
-		player == 'X' ? player = 'O' : player = 'X';
 	}
 	return winner;
 }
