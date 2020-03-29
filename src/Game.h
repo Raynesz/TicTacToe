@@ -1,7 +1,7 @@
 #pragma once
 class Game
 {
-	char curr_player = 'X', winner = '\n';
+	char curr_player = 'X', winner = '\0';
 	int input, turns = 0;
 	char board[9] = { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' };
 

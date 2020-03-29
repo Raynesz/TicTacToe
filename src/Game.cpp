@@ -7,57 +7,55 @@
 
 void Game::evaluateWinner() {
 	if (turns > 4) {
-		if (turns == 9) {
-			winner = 'D';
-			return;
+		switch (input) {
+		case 0:
+			if (triple(0, 1, 2)) break;
+			if (triple(0, 3, 6)) break;
+			if (triple(0, 4, 8)) break;
+			break;
+		case 1:
+			if (triple(0, 1, 2)) break;
+			if (triple(1, 4, 7)) break;
+			break;
+		case 2:
+			if (triple(0, 1, 2)) break;
+			if (triple(2, 5, 8)) break;
+			if (triple(2, 4, 6)) break;
+			break;
+		case 3:
+			if (triple(3, 4, 5)) break;
+			if (triple(0, 3, 6)) break;
+			break;
+		case 4:
+			if (triple(3, 4, 5)) break;
+			if (triple(2, 5, 8)) break;
+			if (triple(0, 4, 8)) break;
+			if (triple(2, 4, 6)) break;
+			break;
+		case 5:
+			if (triple(3, 4, 5)) break;
+			if (triple(2, 5, 8)) break;
+			break;
+		case 6:
+			if (triple(6, 7, 8)) break;
+			if (triple(0, 3, 6)) break;
+			if (triple(2, 4, 6)) break;
+			break;
+		case 7:
+			if (triple(6, 7, 8)) break;
+			if (triple(1, 4, 7)) break;
+			break;
+		case 8:
+			if (triple(6, 7, 8)) break;
+			if (triple(2, 5, 8)) break;
+			if (triple(0, 4, 8)) break;
+			break;
+		default:
+			break;
 		}
-		else {
-			switch (input) {
-			case 0:
-				if (triple(0, 1, 2)) break;
-				if (triple(0, 3, 6)) break;
-				if (triple(0, 4, 8)) break;
-				break;
-			case 1:
-				if (triple(0, 1, 2)) break;
-				if (triple(1, 4, 7)) break;
-				break;
-			case 2:
-				if (triple(0, 1, 2)) break;
-				if (triple(2, 5, 8)) break;
-				if (triple(2, 4, 6)) break;
-				break;
-			case 3:
-				if (triple(3, 4, 5)) break;
-				if (triple(0, 3, 6)) break;
-				break;
-			case 4:
-				if (triple(3, 4, 5)) break;
-				if (triple(2, 5, 8)) break;
-				if (triple(0, 4, 8)) break;
-				if (triple(2, 4, 6)) break;
-				break;
-			case 5:
-				if (triple(3, 4, 5)) break;
-				if (triple(2, 5, 8)) break;
-				break;
-			case 6:
-				if (triple(6, 7, 8)) break;
-				if (triple(0, 3, 6)) break;
-				if (triple(2, 4, 6)) break;
-				break;
-			case 7:
-				if (triple(6, 7, 8)) break;
-				if (triple(1, 4, 7)) break;
-				break;
-			case 8:
-				if (triple(6, 7, 8)) break;
-				if (triple(2, 5, 8)) break;
-				if (triple(0, 4, 8)) break;
-				break;
-			default:
-				break;
-			}
+
+		if ((turns == 9) && (winner == '\0')) {
+			winner = 'D';
 		}
 	}
 	return;
@@ -74,21 +72,21 @@ bool Game::triple(int x, int y, int z) {
 }
 
 void Game::mainLoop() {
-	while (winner == '\n') {
+	while (winner == '\0') {
 		drawBoard();
-		printBoardList();
+		//printBoardList();
 		std::cout << std::endl << "Player " << curr_player << ": ";
 		intInput();
 		if (validateInput()) {
 			if (input == -1) {
 				winner = 'E';
-				return;
+				break;
 			}
 			else {
 				set(curr_player, input);
 				turns++;
+				evaluateWinner();
 			}
-			evaluateWinner();
 			nextPlayer();
 		}
 		else {
@@ -139,20 +137,21 @@ bool Game::validateInput() {
 }
 
 void Game::start() {
-	std::cout << "----------- GAME START -----------" << std::endl;
+	std::cout << "----------- GAME START -----------" << std::endl << std::endl;
 	std::cout << "Use numbers 1-9 in the numpad to place your mark on the board. Type in 0 if you want to exit." << std::endl;
 	mainLoop();
+	drawBoard();
 	switch(winner) {
 	case 'D':
-		std::cout <<"Draw!!" << std::endl;
+		std::cout << std::endl << "Draw!!" << std::endl;
 		break;
 	case 'E':
-		std::cout << "You exited the game." << std::endl;
+		std::cout << std::endl << "Player " << curr_player << " exited the game." << std::endl;
 		break;
 	default:
-		std::cout << winner << " wins!!" << std::endl;
+		std::cout << std::endl << "Player " << winner << " wins!!" << std::endl;
 	}
-	std::cout << "----------- GAME END -----------" << std::endl;
+	std::cout << std::endl << "----------- GAME END -----------" << std::endl;
 	return;
 }
 
