@@ -3,7 +3,6 @@
 #include "setupConsole.h"
 
 int main() {
-	///*
 	char play;
 	Game *game;
 
@@ -19,11 +18,6 @@ int main() {
 	} while (play == 'y');
 
 	std::cout << std::endl << "----------- PROGRAM TERMINATED -----------" << std::endl;
-	//*/
 	
-	/*
-
-	//*/
-
 	return 0;
 }
