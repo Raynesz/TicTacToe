@@ -2,7 +2,7 @@
 class Game
 {
 	char curr_player = 'X', winner = '\0';
-	int input, turns = 0;
+	int input = 9, turns = 0;
 	char board[9] = { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' };
 
 	void drawBoard();

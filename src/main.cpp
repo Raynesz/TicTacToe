@@ -1,10 +1,13 @@
 #include <iostream>
 #include "Game.h"
+#include "setupConsole.h"
 
 int main() {
 	///*
 	char play;
 	Game *game;
+
+	setupVirtualConsole();
 
 	do {
 		game = new Game;
@@ -20,11 +23,6 @@ int main() {
 	
 	/*
 
-	int x;
-	do {
-		std::cin >> x;
-	} while (isalpha(x));
-	std::cout << x << std::endl;
 	//*/
 
 	return 0;
