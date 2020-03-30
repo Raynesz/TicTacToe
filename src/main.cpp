@@ -15,7 +15,7 @@ int main() {
 
 		std::cout << std::endl << "----------- PLAY AGAIN? (Press 'y' if yes or anything else to close the game.) -----------" << std::endl << std::endl;
 		std::cin >> play;
-	} while (play == 'y');
+	} while (play == 'y' || play == 'Y');
 
 	std::cout << std::endl << "----------- PROGRAM TERMINATED -----------" << std::endl;
 	
